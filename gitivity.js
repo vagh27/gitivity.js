@@ -11,8 +11,8 @@ var Gitivity = {
 Gitivity.Models.Movie = Backbone.Model.extend({})
 Gitivity.Collections.Movies = Backbone.Collection.extend({
     model: Gitivity.Models.Movie,
-    url: "https://api.github.com/users/"+yourID+"/events/public",
-    //url: "scripts/data/test.json",
+    //url: "https://api.github.com/users/"+yourID+"/events/public",
+    url: "scripts/data/test.json",
     initialize: function(){
         console.log("initialize collection")
     }

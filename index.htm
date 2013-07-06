@@ -2,8 +2,10 @@
 <head>
 	<title></title>
     <style>
-        ul { padding:5px; background-color: #ccc;}
-            ul li { display: block; float: left; border:1px solid #333; }
+        body { margin: 0; font-family:Arial; }
+        ul { padding:0px; margin: 0; display: block;float: left; width:50px; }
+            ul li, ul li a { color:#fff; }
+            ul li { margin:0px; padding:5px; display:block; width:40px;  color:#fff; background-color: #333; border:1px solid #ccc; border-top:0px solid red; text-align: center; }
     </style>
 </head>
 <body>
@@ -17,7 +19,7 @@
         <% if( extra.url != null) { %>
             <a href="<%= extra.url %>" target="_blank"><%= extra.currentMonth %> <%= extra.currentDayofMonth %></a>
         <% }else{ %>
-            <%= extra.currentMonth %> <%= extra.currentDayofMonth %>
+            <span><%= extra.currentMonth %> <%= extra.currentDayofMonth %></span>
         <% } %>
     </script>
 
