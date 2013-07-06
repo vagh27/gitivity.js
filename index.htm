@@ -2,23 +2,22 @@
 <head>
 	<title></title>
     <style>
-        ul {}
-            ul li { display: block; float: left; border:1px solid #ccc; }
+        ul { padding:5px; background-color: #ccc;}
+            ul li { display: block; float: left; border:1px solid #333; }
     </style>
 </head>
 <body>
     <div id="container"></div>
 
     <script type="text/template" id="tmplt-Activities">
-        <ul>
-        </ul>
+        <ul class="d<%= currentDayofMonth %>"></ul>
     </script>
 
     <script type="text/template" id="tmplt-Activity">
         <% if( extra.url != null) { %>
-            <a href="<%= extra.url %>" target="_blank"><%= extra.currentDayofWeek %> <%= extra.currentDayofMonth %></a>
+            <a href="<%= extra.url %>" target="_blank"><%= extra.currentMonth %> <%= extra.currentDayofMonth %></a>
         <% }else{ %>
-            <%= extra.currentDayofWeek %> <%= extra.currentDayofMonth %>
+            <%= extra.currentMonth %> <%= extra.currentDayofMonth %>
         <% } %>
     </script>
 
