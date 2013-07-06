@@ -1,4 +1,6 @@
 ﻿
+var yourID = "vagh27"
+
 var Gitivity = {
     Models: {},
     Collections: {},
@@ -9,18 +11,18 @@ var Gitivity = {
 Gitivity.Models.Movie = Backbone.Model.extend({})
 Gitivity.Collections.Movies = Backbone.Collection.extend({
     model: Gitivity.Models.Movie,
-    //url: "https://api.github.com/users/vagh27/events/public",
-    url: "scripts/data/test.json",
+    url: "https://api.github.com/users/"+yourID+"/events/public",
+    //url: "scripts/data/test.json",
     initialize: function(){
         console.log("initialize collection")
     }
 });
 
-Gitivity.Templates.movies = _.template($("#tmplt-Activities").html())
+Gitivity.Templates.activities = _.template($("#tmplt-Activities").html())
 
-Gitivity.Views.Movies = Backbone.View.extend({
+Gitivity.Views.Activities = Backbone.View.extend({
     el: $("#container"),
-    template: Gitivity.Templates.movies,
+    template: Gitivity.Templates.activities,
     initialize: function () {
         this.collection.bind("reset", this.render, this);
         this.collection.bind("add", this.addOne, this);
@@ -53,17 +55,17 @@ Gitivity.Views.Movies = Backbone.View.extend({
         }
     },
     addOne: function (activity,currentDayofWeek,currentDayofMonth,url) {
-        view = new Gitivity.Views.Movie({ model: activity, currentDayofWeek:currentDayofWeek, currentDayofMonth:currentDayofMonth, url:url });
+        view = new Gitivity.Views.Activity({ model: activity, currentDayofWeek:currentDayofWeek, currentDayofMonth:currentDayofMonth, url:url });
         $("ul", this.el).append(view.render());
     }
 
 })
 
 
-Gitivity.Templates.movie = _.template($("#tmplt-Activity").html())
-Gitivity.Views.Movie = Backbone.View.extend({
+Gitivity.Templates.activity = _.template($("#tmplt-Activity").html())
+Gitivity.Views.Activity = Backbone.View.extend({
     tagName: "li",
-    template: Gitivity.Templates.movie,
+    template: Gitivity.Templates.activity,
     initialize: function () {
         //this.model.bind('destroy', this.destroyItem, this);
     },
@@ -74,6 +76,6 @@ Gitivity.Views.Movie = Backbone.View.extend({
 })
 
 
-Gitivity.movies = new Gitivity.Collections.Movies()
-new Gitivity.Views.Movies({ collection: Gitivity.movies }); 
-Gitivity.movies.fetch();
+Gitivity.activities = new Gitivity.Collections.Movies()
+new Gitivity.Views.Activities({ collection: Gitivity.activities }); 
+Gitivity.activities.fetch();
