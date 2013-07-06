@@ -41,12 +41,14 @@ Gitivity.Views.Movies = Backbone.View.extend({
                 currentDayofMonth = dateParse.getDate(),
                 currentDayofWeek = dateParse.getDay(),
                 currentMonth = dateParse.getMonth(),
-                url = "";
+                url = null;
 
             if(currentData.type == 'PushEvent'){
                 url = "https://github.com/"+currentData.repo.name+"/commit/"+currentData.payload.head;
             }
 
+            //so we're passing a bunch of stuff, including currentData as a model, just so we have it
+            //all this 'stuff' is pretty much to avoid having to add lots of 'if' statements in the template
             this.addOne(currentData,currentDayofWeek,currentDayofMonth,url)
         }
     },
