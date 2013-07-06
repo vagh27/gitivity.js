@@ -1,0 +1,25 @@
+﻿<html>
+<head>
+	<title></title>
+    <style>
+        ul {}
+            ul li { display: block; float: left; border:1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+
+    <script type="text/template" id="tmplt-Activities">
+        <ul>
+        </ul>
+    </script>
+    <script type="text/template" id="tmplt-Activity">
+        <a href="<%= extra.url %>" target="_blank"><%= extra.currentDayofWeek %> <%= extra.currentDayofMonth %></a>
+    </script>
+
+    <script src="scripts/libs/jquery-1.7.1.js" type="text/javascript"></script>
+    <script src="scripts/libs/underscore.js" type="text/javascript"></script>
+    <script src="scripts/libs/backbone.js" type="text/javascript"></script>
+    <script src="scripts/gitivity.js" type="text/javascript"></script>   
+</body>
+</html>
