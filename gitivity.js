@@ -17,8 +17,8 @@ Gitivity.Models.Activity = Backbone.Model.extend({})
 
 Gitivity.Collections.Activities = Backbone.Collection.extend({
     model: Gitivity.Models.Activity,
-    //url: "https://api.github.com/users/"+yourID+"/events/public",
-    url: "scripts/data/test.json",
+    url: "https://api.github.com/users/"+yourID+"/events/public",
+    //url: "scripts/data/test.json",
     initialize: function(){
         console.log("initialize collection")
     }
@@ -46,7 +46,9 @@ Gitivity.Views.Activities = Backbone.View.extend({
         //get first day
         var currentSet = new Date(allData[0].created_at);
             currentDayofSet = currentSet.getDate(),
-            currentMonth = currentSet.getMonth();
+            currentMonth = currentSet.getMonth(),
+            totes = 1;
+
         $(this.el).html(this.template({ currentDayofMonth:currentDayofSet, currentMonth:currentMonth }));
 
         for(var i=0; i < allData.length; i++){
@@ -63,12 +65,15 @@ Gitivity.Views.Activities = Backbone.View.extend({
             //create a new day ul if the current day does not match the previous day
             var dayDiff = currentDayofSet-currentDayofMonth;
             if (currentDayofSet != currentDayofMonth){ 
-                if( dayDiff != 1  ){
+
+                //create an empty day if you didn't do anything that day...this will get sketchy for inbtwn month activity so we won't worry about this now
+                /*if( dayDiff != 1  ){
                     for(var a=1; a < dayDiff; a++){
                         var tempDay = currentDayofSet - a;
                         $(this.el).append(this.template({ currentDayofMonth:tempDay, currentMonth:currentMonth }));
                     }
-                }
+                }*/
+                totes++;
                 $(this.el).append(this.template({ currentDayofMonth:currentDayofMonth, currentMonth:currentMonth })); 
             }
 
@@ -81,13 +86,15 @@ Gitivity.Views.Activities = Backbone.View.extend({
 
             //so we're passing a bunch of stuff, including currentData as a model, just so we have it
             //all this 'stuff' is pretty much to avoid having to add lots of 'if' statements in the template
-            this.addOne(currentData,currentMonth,currentDayofMonth,url,startNewDay)
+            this.addOne(currentData,currentMonth,currentDayofMonth,url,totes)
         }
     },
-    addOne: function (activity,currentMonth,currentDayofMonth,url,startNewDay) {
-        view = new Gitivity.Views.Activity({ model: activity, currentMonth:currentMonth, currentDayofMonth:currentDayofMonth, url:url, startNewDay:startNewDay });
-        
-        $("ul.d"+currentDayofMonth, this.el).append(view.render());
+    addOne: function (activity,currentMonth,currentDayofMonth,url,totes) {
+        view = new Gitivity.Views.Activity({ model: activity, currentMonth:currentMonth, currentDayofMonth:currentDayofMonth, url:url });
+        $("ul.d"+currentDayofMonth, this.el).append(view.render()); 
+
+        var widthOfUl = 100/totes + "%";
+        $("ul", this.el).css({'width':widthOfUl});
     }
 
 })

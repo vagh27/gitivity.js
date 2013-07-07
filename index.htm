@@ -3,10 +3,13 @@
 	<title></title>
     <style>
         body { margin: 0; font-family:Arial; }
-        ul { padding:0px; margin: 0; display: block;float: left; width:50px; }
-            ul li, ul li a { color:#fff; }
-            ul li { margin:0px; padding:5px; display:block; width:40px;  color:#fff; background-color: #ccc; border:1px solid #ccc; border-top:0px solid red; text-align: center; }
-                ul li.day { background-color: #333;}
+        ul { padding:0px; margin: 0; display: block;float: left;  }
+            ul li, ul li a { color:#fff; display: block; width:100%; }
+
+            ul li { margin:0px; padding:0px; color:#fff; background-color: #ccc; border:1px solid #eee; border-top:0px solid red; text-align: center; padding:3px 0; font-size:12px; color:#efefef; }
+                ul li.day { background-color: #333; font-size:14px; }
+            ul li a { text-decoration: none; color:#fff; }
+                ul li a:hover { color:blue; }
     </style>
 </head>
 <body>
@@ -20,9 +23,9 @@
 
     <script type="text/template" id="tmplt-Activity">
         <% if( extra.url != null) { %>
-            <a href="<%= extra.url %>" target="_blank"><%= extra.currentMonth %> <%= extra.currentDayofMonth %></a>
+            <a href="<%= extra.url %>" target="_blank"><%= model.repo.name.replace('vagh27/','') %></a>
         <% }else{ %>
-            <span><%= extra.currentMonth %> <%= extra.currentDayofMonth %></span>
+            <span><%= model.repo.name.replace('vagh27/','') %></span>
         <% } %>
     </script>
 
