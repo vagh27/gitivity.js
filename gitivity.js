@@ -8,9 +8,15 @@ var Gitivity = {
     Templates:{}
 }
 
-Gitivity.Models.Movie = Backbone.Model.extend({})
-Gitivity.Collections.Movies = Backbone.Collection.extend({
-    model: Gitivity.Models.Movie,
+//define templates
+Gitivity.Templates.activities = _.template($("#tmplt-Activities").html())
+Gitivity.Templates.activity = _.template($("#tmplt-Activity").html())
+
+
+Gitivity.Models.Activity = Backbone.Model.extend({})
+
+Gitivity.Collections.Activities = Backbone.Collection.extend({
+    model: Gitivity.Models.Activity,
     //url: "https://api.github.com/users/"+yourID+"/events/public",
     url: "scripts/data/test.json",
     initialize: function(){
@@ -18,7 +24,7 @@ Gitivity.Collections.Movies = Backbone.Collection.extend({
     }
 });
 
-Gitivity.Templates.activities = _.template($("#tmplt-Activities").html())
+
 
 Gitivity.Views.Activities = Backbone.View.extend({
     el: $("#container"),
@@ -38,9 +44,10 @@ Gitivity.Views.Activities = Backbone.View.extend({
         //this.collection.each(this.addOne);
 
         //get first day
-        var currentDayofSet = new Date(allData[0].created_at);
-        currentDayofSet = currentDayofSet.getDate();
-        $(this.el).html(this.template({ currentDayofMonth:currentDayofSet }));
+        var currentSet = new Date(allData[0].created_at);
+            currentDayofSet = currentSet.getDate(),
+            currentMonth = currentSet.getMonth();
+        $(this.el).html(this.template({ currentDayofMonth:currentDayofSet, currentMonth:currentMonth }));
 
         for(var i=0; i < allData.length; i++){
             var currentData = allData[i],
@@ -51,12 +58,21 @@ Gitivity.Views.Activities = Backbone.View.extend({
                 url = null,
                 startNewDay = false;
 
-                //alert(currentDayofSet + " "+ currentDayofMonth)
+            //alert(currentDayofSet + " "+ currentDayofMonth)
 
-                if(currentDayofSet == currentDayofMonth){  }
-                else { $(this.el).append(this.template({ currentDayofMonth:currentDayofMonth })); }
+            //create a new day ul if the current day does not match the previous day
+            var dayDiff = currentDayofSet-currentDayofMonth;
+            if (currentDayofSet != currentDayofMonth){ 
+                if( dayDiff != 1  ){
+                    for(var a=1; a < dayDiff; a++){
+                        var tempDay = currentDayofSet - a;
+                        $(this.el).append(this.template({ currentDayofMonth:tempDay, currentMonth:currentMonth }));
+                    }
+                }
+                $(this.el).append(this.template({ currentDayofMonth:currentDayofMonth, currentMonth:currentMonth })); 
+            }
 
-                currentDayofSet = currentDayofMonth;
+            currentDayofSet = currentDayofMonth;
 
 
             if(currentData.type == 'PushEvent'){
@@ -77,7 +93,7 @@ Gitivity.Views.Activities = Backbone.View.extend({
 })
 
 
-Gitivity.Templates.activity = _.template($("#tmplt-Activity").html())
+
 Gitivity.Views.Activity = Backbone.View.extend({
     tagName: "li",
     template: Gitivity.Templates.activity,
@@ -91,6 +107,6 @@ Gitivity.Views.Activity = Backbone.View.extend({
 })
 
 
-Gitivity.activities = new Gitivity.Collections.Movies()
+Gitivity.activities = new Gitivity.Collections.Activities()
 new Gitivity.Views.Activities({ collection: Gitivity.activities }); 
 Gitivity.activities.fetch();

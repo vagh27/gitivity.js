@@ -5,14 +5,17 @@
         body { margin: 0; font-family:Arial; }
         ul { padding:0px; margin: 0; display: block;float: left; width:50px; }
             ul li, ul li a { color:#fff; }
-            ul li { margin:0px; padding:5px; display:block; width:40px;  color:#fff; background-color: #333; border:1px solid #ccc; border-top:0px solid red; text-align: center; }
+            ul li { margin:0px; padding:5px; display:block; width:40px;  color:#fff; background-color: #ccc; border:1px solid #ccc; border-top:0px solid red; text-align: center; }
+                ul li.day { background-color: #333;}
     </style>
 </head>
 <body>
     <div id="container"></div>
 
     <script type="text/template" id="tmplt-Activities">
-        <ul class="d<%= currentDayofMonth %>"></ul>
+        <ul class="d<%= currentDayofMonth %>">
+            <li class="day"> <%= currentMonth %>/<%= currentDayofMonth %></li>
+        </ul>
     </script>
 
     <script type="text/template" id="tmplt-Activity">
