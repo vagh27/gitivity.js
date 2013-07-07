@@ -17,8 +17,8 @@ Gitivity.Models.Activity = Backbone.Model.extend({})
 
 Gitivity.Collections.Activities = Backbone.Collection.extend({
     model: Gitivity.Models.Activity,
-    url: "https://api.github.com/users/"+yourID+"/events/public",
-    //url: "scripts/data/test.json",
+    //url: "https://api.github.com/users/"+yourID+"/events/public",
+    url: "scripts/data/test.json",
     initialize: function(){
         console.log("initialize collection")
     }
