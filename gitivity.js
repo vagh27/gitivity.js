@@ -17,8 +17,8 @@ Gitivity.Models.Activity = Backbone.Model.extend({})
 
 Gitivity.Collections.Activities = Backbone.Collection.extend({
     model: Gitivity.Models.Activity,
-    //url: "https://api.github.com/users/"+yourID+"/events/public",
-    url: "scripts/data/test.json",
+    url: "https://api.github.com/users/"+yourID+"/events/public",
+    //url: "scripts/data/test.json",
     initialize: function(){
         console.log("initialize collection")
     }
@@ -43,10 +43,13 @@ Gitivity.Views.Activities = Backbone.View.extend({
         var allData = this.collection.toJSON();
         //this.collection.each(this.addOne);
 
+        console.log(allData);
+
         //get first day
         var currentSet = new Date(allData[0].created_at);
             currentDayofSet = currentSet.getDate(),
-            currentMonth = currentSet.getMonth(),
+            currentMonth = currentSet.getMonth() + 1,
+            currentMonthofSet = currentSet.getMonth() + 1,
             totes = 1;
 
         $(this.el).html(this.template({ currentDayofMonth:currentDayofSet, currentMonth:currentMonth }));
@@ -56,15 +59,13 @@ Gitivity.Views.Activities = Backbone.View.extend({
                 dateParse = new Date(allData[i].created_at),
                 currentDayofMonth = dateParse.getDate(),
                 currentDayofWeek = dateParse.getDay(),
-                currentMonth = dateParse.getMonth(),
+                currentMonth = dateParse.getMonth() +1,
                 url = null,
                 startNewDay = false;
 
-            //alert(currentDayofSet + " "+ currentDayofMonth)
-
             //create a new day ul if the current day does not match the previous day
             var dayDiff = currentDayofSet-currentDayofMonth;
-            if (currentDayofSet != currentDayofMonth){ 
+            if (currentDayofSet != currentDayofMonth || currentMonthofSet != currentMonth){ 
 
                 //create an empty day if you didn't do anything that day...this will get sketchy for inbtwn month activity so we won't worry about this now
                 /*if( dayDiff != 1  ){
@@ -78,6 +79,7 @@ Gitivity.Views.Activities = Backbone.View.extend({
             }
 
             currentDayofSet = currentDayofMonth;
+            currentMonthofSet = currentMonth;
 
 
             if(currentData.type == 'PushEvent'){
@@ -91,7 +93,7 @@ Gitivity.Views.Activities = Backbone.View.extend({
     },
     addOne: function (activity,currentMonth,currentDayofMonth,url,totes) {
         view = new Gitivity.Views.Activity({ model: activity, currentMonth:currentMonth, currentDayofMonth:currentDayofMonth, url:url });
-        $("ul.d"+currentDayofMonth, this.el).append(view.render()); 
+        $("ul.d"+currentMonth+currentDayofMonth, this.el).append(view.render()); 
 
         var widthOfUl = 100/totes + "%";
         $("ul", this.el).css({'width':widthOfUl});

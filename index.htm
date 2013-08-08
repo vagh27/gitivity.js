@@ -16,16 +16,16 @@
     <div id="container"></div>
 
     <script type="text/template" id="tmplt-Activities">
-        <ul class="d<%= currentDayofMonth %>">
+        <ul class="d<%= currentMonth %><%= currentDayofMonth %>">
             <li class="day"> <%= currentMonth %>/<%= currentDayofMonth %></li>
         </ul>
     </script>
 
     <script type="text/template" id="tmplt-Activity">
         <% if( extra.url != null) { %>
-            <a href="<%= extra.url %>" target="_blank"><%= model.repo.name.replace('vagh27/','') %></a>
+            <a href="<%= extra.url %>" target="_blank"><%= model.repo.name.replace('kylenstone/','') %></a>
         <% }else{ %>
-            <span><%= model.repo.name.replace('vagh27/','') %></span>
+            <span><%= model.repo.name.replace('kylenstone/','') %></span>
         <% } %>
     </script>
 
